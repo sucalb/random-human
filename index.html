@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Random Human</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">🎲</span>
+        <span class="brand-text"><b>Random Human</b><small>Bốc thăm lên bảng</small></span>
+      </div>
+      <nav id="tabs" class="tabs" aria-label="Chọn trò chơi"></nav>
+      <div class="actions">
+        <button id="btnSound" class="icon-btn" title="Bật/tắt âm thanh">🔊</button>
+        <button id="btnFull" class="icon-btn" title="Toàn màn hình">⛶</button>
+        <button id="btnList" class="btn ghost">📋 <span>Danh sách</span></button>
+      </div>
+    </header>
+
+    <main class="stage-wrap">
+      <div id="stage" class="stage">
+        <canvas id="cv"></canvas>
+        <div class="vignette"></div>
+        <div id="gameLabel" class="game-label">
+          <span class="gl-icon"></span>
+          <span class="gl-text"><b class="gl-name"></b><small class="gl-desc"></small></span>
+        </div>
+        <div id="hint" class="hint">Nhấn <kbd>Space</kbd> hoặc <b>Bắt đầu</b> để chơi</div>
+        <div id="reveal" class="reveal hidden" aria-hidden="true">
+          <div class="rays"></div>
+          <div class="reveal-card"><small id="revealNum"></small><b id="revealName"></b></div>
+        </div>
+        <div id="flash" class="flash"></div>
+        <div id="chips" class="chips" aria-live="polite"></div>
+      </div>
+    </main>
+
+    <footer class="bottombar">
+      <div class="pool">
+        <span class="pool-dot"></span>
+        <span id="poolInfo"></span>
+        <button id="btnResetPool" class="link hidden">Làm mới</button>
+      </div>
+      <div class="count">
+        <span>Chọn</span>
+        <button id="btnMinus" class="step" aria-label="Bớt">−</button>
+        <b id="countVal">1</b>
+        <button id="btnPlus" class="step" aria-label="Thêm">+</button>
+        <span>người</span>
+      </div>
+      <button id="btnStart" class="start"><span class="play">▶</span> BẮT ĐẦU</button>
+    </footer>
+
+    <div id="scrim" class="scrim hidden"></div>
+    <aside id="drawer" class="drawer" aria-hidden="true">
+      <div class="drawer-head">
+        <h2>Danh sách</h2>
+        <button id="btnCloseDrawer" class="icon-btn dark" aria-label="Đóng">✕</button>
+      </div>
+      <div class="drawer-body">
+        <label class="field">
+          <span>Mỗi dòng một tên <em id="nameCount"></em></span>
+          <textarea id="names" rows="12" spellcheck="false"></textarea>
+        </label>
+        <div class="row">
+          <label class="btn small file">📂 Nhập file .txt / .csv<input id="file" type="file" accept=".txt,.csv,text/plain,text/csv" hidden></label>
+          <button id="btnShuffleNames" class="btn small">🔀 Xáo trộn</button>
+        </div>
+        <label class="check"><input id="optDrama" type="checkbox"> 🎭 Kịch tính giả — thỉnh thoảng suýt chọn nhầm người rồi mới "đổi ý"</label>
+        <label class="check"><input id="optRemove" type="checkbox"> Người đã được chọn sẽ không bị chọn lại (cho đến khi bấm "Làm mới")</label>
+        <label class="field">
+          <span>Tiêu đề kết quả</span>
+          <input id="optTitle" type="text">
+        </label>
+        <section>
+          <div class="sec-head"><h3>Đã được chọn</h3><button id="btnResetPool2" class="link">Làm mới</button></div>
+          <div id="pickedList" class="tag-list"></div>
+        </section>
+        <section>
+          <div class="sec-head"><h3>Lịch sử</h3><button id="btnClearHistory" class="link">Xoá</button></div>
+          <ol id="history" class="history"></ol>
+        </section>
+      </div>
+    </aside>
+
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+      <div class="card">
+        <div class="card-head">
+          <div class="burst">🎉</div>
+          <p class="eyebrow">Kết quả ngẫu nhiên</p>
+          <h2 id="resultTitle"></h2>
+          <div class="stamp">ĐÃ CHỌN</div>
+        </div>
+        <ul id="resultList" class="result-list"></ul>
+        <div class="card-actions">
+          <button id="btnAgain" class="start small">Lượt mới</button>
+          <button id="btnClose" class="btn">Đóng</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+  </div>
+  <canvas id="fx"></canvas>
+
+  <script src="js/core.js"></script>
+  <script src="js/people.js"></script>
+  <script src="js/games/ufo.js"></script>
+  <script src="js/games/wheel.js"></script>
+  <script src="js/games/race.js"></script>
+  <script src="js/games/slot.js"></script>
+  <script src="js/games/train.js"></script>
+  <script src="js/games/bottle.js"></script>
+  <script src="js/games/zombie.js"></script>
+  <script src="js/games/lightning.js"></script>
+  <script src="js/games/eagle.js"></script>
+  <script src="js/games/toilet.js"></script>
+  <script src="js/games/bees.js"></script>
+  <script src="js/games/witch.js"></script>
+  <script src="js/games/tornado.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
